@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hitung Kursi Realtime</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#1f1f1f;
+color:white;
+padding:20px;
+}
+
+/* ===========================
+   PENGATURAN DENAH
+=========================== */
+
+.config{
+width:100%;
+max-width:500px;
+margin:0 auto 20px;
+background:#2b2b2b;
+padding:20px;
+border-radius:10px;
+}
+
+.config h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.item label{
+font-size:18px;
+font-weight:bold;
+}
+
+.item input{
+width:90px;
+padding:10px;
+font-size:18px;
+text-align:center;
+border:none;
+border-radius:8px;
+}
+
+#ubahDenah{
+width:100%;
+padding:15px;
+margin-top:10px;
+background:#0d6efd;
+border:none;
+border-radius:8px;
+font-size:18px;
+color:white;
+cursor:pointer;
+}
+
+#ubahDenah:hover{
+opacity:.9;
+}
+
+/* ===========================
+   PANGGUNG
+=========================== */
+
+.stage{
+width:100%;
+max-width:1800px;
+margin:auto auto 20px;
+background:#444;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+/* ===========================
+   BLOK
+=========================== */
+
+.wrap{
+display:grid;
+grid-template-columns:1fr;
+gap:20px;
+width:100%;
+max-width:1800px;
+margin:auto;
+}
+
+@media(min-width:768px){
+
+.wrap{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(min-width:1200px){
+
+.wrap{
+
+grid-template-columns:repeat(5,1fr);
+
+}
+
+}
+
+.block{
+
+background:#2b2b2b;
+padding:15px;
+border-radius:10px;
+
+}
+
+.block h2{
+
+text-align:center;
+margin-bottom:15px;
+
+}
+
+/* ===========================
+   KURSI
+=========================== */
+
+.seats{
+
+display:grid;
+grid-template-columns:repeat(10,1fr);
+gap:8px;
+
+}
+
+.seat{
+
+padding:14px 0;
+background:#28a745;
+border:none;
+border-radius:8px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+transition:.2s;
+
+}
+
+.seat:hover{
+
+transform:scale(1.05);
+
+}
+
+.seat.booked{
+
+background:#dc3545;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+.footer{
+
+position:sticky;
+bottom:0;
+width:100%;
+max-width:1800px;
+margin:25px auto 0;
+background:#111;
+padding:20px;
+text-align:center;
+border-radius:10px 10px 0 0;
+
+}
+
+.counter{
+
+font-size:22px;
+margin-bottom:15px;
+
+}
+
+#reset{
+
+background:#dc3545;
+color:white;
+border:none;
+padding:14px 30px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="config">
+
+<h2>Pengaturan Denah</h2>
+
+<div class="item">
+
+<label>Blok</label>
+
+<input
+type="number"
+id="blok"
+value="2"
+min="1">
+
+</div>
+
+<div class="item">
+
+<label>Baris</label>
+
+<input
+type="number"
+id="baris"
+value="2"
+min="1">
+
+</div>
+
+<div class="item">
+
+<label>Kolom</label>
+
+<input
+type="number"
+id="kolom"
+value="10"
+min="1">
+
+</div>
+
+<button id="ubahDenah">
+
+UBAH DENAH
+
+</button>
+
+</div>
+
+<div class="stage">
+
+PANGGUNG
+
+</div>
+
+<div
+class="wrap"
+id="wrap">
+
+</div>
+
+<div class="footer">
+
+<div class="counter">
+
+Kursi Terisi :
+
+<b id="jumlah">
+
+0
+
+</b>
+
+</div>
+
+<button id="reset">
+
+RESET SEMUA
+
+</button>
+
+</div>
+
+  <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+set,
+get,
+onValue,
+remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyDUBQodoEwmyD3uVFJNJNIByPeWfgkfKXk",
+
+authDomain:"hitung-hadiri-tatatertib.firebaseapp.com",
+
+databaseURL:"https://hitung-hadiri-tatatertib-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"hitung-hadiri-tatatertib",
+
+storageBucket:"hitung-hadiri-tatatertib.firebasestorage.app",
+
+messagingSenderId:"558298621036",
+
+appId:"1:558298621036:web:4f5c4cd051278c8e9de449"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+const wrap=document.getElementById("wrap");
+
+const jumlah=document.getElementById("jumlah");
+
+let seatMap={};
+
+function namaBlok(jumlahBlok){
+
+const arr=[];
+
+for(let i=0;i<jumlahBlok;i++){
+
+arr.push(String.fromCharCode(65+i));
+
+}
+
+return arr;
+
+}
+
+function buatDenah(blok,baris,kolom){
+
+wrap.innerHTML="";
+
+seatMap={};
+
+const blocks=namaBlok(blok);
+
+blocks.forEach(block=>{
+
+const card=document.createElement("div");
+
+card.className="block";
+
+const title=document.createElement("h2");
+
+title.textContent="BLOK "+block;
+
+const seats=document.createElement("div");
+
+seats.className="seats";
+
+seats.style.gridTemplateColumns=
+`repeat(${kolom},1fr)`;
+
+let nomor=1;
+
+for(let r=1;r<=baris;r++){
+
+for(let c=1;c<=kolom;c++){
+
+const kode=
+block+"-"+String(nomor).padStart(2,"0");
+
+const btn=document.createElement("button");
+
+btn.className="seat";
+
+btn.textContent=
+String(nomor).padStart(2,"0");
+
+btn.onclick=()=>{
+
+const kursi=ref(db,"kursi/"+kode);
+
+if(btn.classList.contains("booked")){
+
+remove(kursi);
+
+}else{
+
+set(kursi,true);
+
+}
+
+};
+
+seatMap[kode]=btn;
+
+seats.appendChild(btn);
+
+nomor++;
+
+}
+
+}
+
+card.appendChild(title);
+
+card.appendChild(seats);
+
+wrap.appendChild(card);
+
+});
+
+}
+// =========================
+// SIMPAN KONFIGURASI DENAH
+// =========================
+
+document.getElementById("ubahDenah").onclick = async () => {
+
+    const blok = Number(document.getElementById("blok").value);
+    const baris = Number(document.getElementById("baris").value);
+    const kolom = Number(document.getElementById("kolom").value);
+
+    if(!confirm("Mengubah denah akan menghapus semua data kursi. Lanjutkan?")){
+        return;
+    }
+
+    await remove(ref(db,"kursi"));
+
+    await set(ref(db,"config"),{
+        blok:blok,
+        baris:baris,
+        kolom:kolom
+    });
+
+};
+
+
+// =========================
+// BACA KONFIGURASI REALTIME
+// =========================
+
+onValue(ref(db,"config"),(snapshot)=>{
+
+    const cfg = snapshot.val();
+
+    if(!cfg){
+
+        set(ref(db,"config"),{
+            blok:2,
+            baris:2,
+            kolom:10
+        });
+
+        return;
+    }
+
+    document.getElementById("blok").value = cfg.blok;
+    document.getElementById("baris").value = cfg.baris;
+    document.getElementById("kolom").value = cfg.kolom;
+
+    buatDenah(cfg.blok,cfg.baris,cfg.kolom);
+
+});
+
+
+// =========================
+// UPDATE KURSI REALTIME
+// =========================
+
+onValue(ref(db,"kursi"),(snapshot)=>{
+
+    const data = snapshot.val() || {};
+
+    Object.values(seatMap).forEach(btn=>{
+        btn.classList.remove("booked");
+    });
+
+    let total = 0;
+
+    Object.keys(data).forEach(kode=>{
+
+        if(seatMap[kode]){
+            seatMap[kode].classList.add("booked");
+            total++;
+        }
+
+    });
+
+    jumlah.textContent = total;
+
+});
+
+
+// =========================
+// RESET
+// =========================
+
+document.getElementById("reset").onclick = ()=>{
+
+    if(confirm("Reset semua kursi?")){
+
+        remove(ref(db,"kursi"));
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
+    
