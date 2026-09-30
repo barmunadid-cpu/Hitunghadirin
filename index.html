@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Hitung Kursi Realtime</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#1f1f1f;
-color:white;
-padding:20px;
+    background:#1f1f1f;
+    color:white;
+    padding:20px;
 }
 
 /* ===========================
@@ -29,54 +24,63 @@ padding:20px;
 =========================== */
 
 .config{
-width:100%;
-max-width:500px;
-margin:0 auto 20px;
-background:#2b2b2b;
-padding:20px;
-border-radius:10px;
+    width:100%;
+    max-width:600px;
+    margin:0 auto 20px;
+    background:#2b2b2b;
+    padding:20px;
+    border-radius:10px;
 }
 
 .config h2{
-text-align:center;
-margin-bottom:20px;
+    text-align:center;
+    margin-bottom:20px;
 }
 
 .item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    gap:10px;
 }
 
 .item label{
-font-size:18px;
-font-weight:bold;
+    font-size:18px;
+    font-weight:bold;
 }
 
 .item input{
-width:90px;
-padding:10px;
-font-size:18px;
-text-align:center;
-border:none;
-border-radius:8px;
+    width:100px;
+    padding:10px;
+    font-size:18px;
+    text-align:center;
+    border:none;
+    border-radius:8px;
 }
 
 #ubahDenah{
-width:100%;
-padding:15px;
-margin-top:10px;
-background:#0d6efd;
-border:none;
-border-radius:8px;
-font-size:18px;
-color:white;
-cursor:pointer;
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    background:#0d6efd;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    color:white;
+    cursor:pointer;
 }
 
 #ubahDenah:hover{
-opacity:.9;
+    opacity:.9;
+}
+
+.info{
+    margin-top:12px;
+    font-size:14px;
+    line-height:1.5;
+    color:#ccc;
+    text-align:center;
 }
 
 /* ===========================
@@ -84,15 +88,15 @@ opacity:.9;
 =========================== */
 
 .stage{
-width:100%;
-max-width:1800px;
-margin:auto auto 20px;
-background:#444;
-padding:15px;
-border-radius:10px;
-text-align:center;
-font-size:22px;
-font-weight:bold;
+    width:100%;
+    max-width:1800px;
+    margin:auto auto 20px;
+    background:#444;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
 }
 
 /* ===========================
@@ -100,47 +104,64 @@ font-weight:bold;
 =========================== */
 
 .wrap{
-display:grid;
-grid-template-columns:1fr;
-gap:20px;
-width:100%;
-max-width:1800px;
-margin:auto;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+    width:100%;
+    max-width:1800px;
+    margin:auto;
 }
 
 @media(min-width:768px){
-
-.wrap{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
+    .wrap{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 @media(min-width:1200px){
-
-.wrap{
-
-grid-template-columns:repeat(5,1fr);
-
-}
-
+    .wrap{
+        grid-template-columns:repeat(5,1fr);
+    }
 }
 
 .block{
+    background:#2b2b2b;
+    padding:15px;
+    border-radius:10px;
+}
 
-background:#2b2b2b;
-padding:15px;
-border-radius:10px;
-
+.block-head{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
 }
 
 .block h2{
+    text-align:center;
+}
 
-text-align:center;
-margin-bottom:15px;
+.edit-block{
+    background:#0d6efd;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:5px 9px;
+    font-size:13px;
+    cursor:pointer;
+}
 
+.edit-block:hover{
+    opacity:.9;
+}
+
+.block-info{
+    text-align:center;
+    color:#bbb;
+    font-size:13px;
+    margin-top:-8px;
+    margin-bottom:12px;
 }
 
 /* ===========================
@@ -148,36 +169,28 @@ margin-bottom:15px;
 =========================== */
 
 .seats{
-
-display:grid;
-grid-template-columns:repeat(10,1fr);
-gap:8px;
-
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:8px;
 }
 
 .seat{
-
-padding:14px 0;
-background:#28a745;
-border:none;
-border-radius:8px;
-font-weight:bold;
-color:white;
-cursor:pointer;
-transition:.2s;
-
+    padding:14px 0;
+    background:#28a745;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    color:white;
+    cursor:pointer;
+    transition:.2s;
 }
 
 .seat:hover{
-
-transform:scale(1.05);
-
+    transform:scale(1.05);
 }
 
 .seat.booked{
-
-background:#dc3545;
-
+    background:#dc3545;
 }
 
 /* ===========================
@@ -185,285 +198,285 @@ background:#dc3545;
 =========================== */
 
 .footer{
-
-position:sticky;
-bottom:0;
-width:100%;
-max-width:1800px;
-margin:25px auto 0;
-background:#111;
-padding:20px;
-text-align:center;
-border-radius:10px 10px 0 0;
-
+    position:sticky;
+    bottom:0;
+    width:100%;
+    max-width:1800px;
+    margin:25px auto 0;
+    background:#111;
+    padding:20px;
+    text-align:center;
+    border-radius:10px 10px 0 0;
 }
 
 .counter{
-
-font-size:22px;
-margin-bottom:15px;
-
+    font-size:22px;
+    margin-bottom:15px;
 }
 
 #reset{
-
-background:#dc3545;
-color:white;
-border:none;
-padding:14px 30px;
-font-size:18px;
-border-radius:8px;
-cursor:pointer;
-
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <div class="config">
+    <h2>Pengaturan Denah</h2>
 
-<h2>Pengaturan Denah</h2>
+    <div class="item">
+        <label>Jumlah Blok</label>
+        <input type="number" id="blok" value="2" min="1" max="26">
+    </div>
 
-<div class="item">
+    <div class="item">
+        <label>Kolom per Baris</label>
+        <input type="number" id="kolom" value="10" min="1" max="30">
+    </div>
 
-<label>Blok</label>
+    <button id="ubahDenah">SIMPAN JUMLAH BLOK</button>
 
-<input
-type="number"
-id="blok"
-value="2"
-min="1">
-
-</div>
-
-<div class="item">
-
-<label>Baris</label>
-
-<input
-type="number"
-id="baris"
-value="2"
-min="1">
-
-</div>
-
-<div class="item">
-
-<label>Kolom</label>
-
-<input
-type="number"
-id="kolom"
-value="10"
-min="1">
-
-</div>
-
-<button id="ubahDenah">
-
-UBAH DENAH
-
-</button>
-
+    <div class="info">
+        Jumlah kursi tiap blok dapat diubah sendiri melalui tombol EDIT pada masing-masing blok.
+    </div>
 </div>
 
 <div class="stage">
-
-PANGGUNG
-
+    PANGGUNG
 </div>
 
-<div
-class="wrap"
-id="wrap">
-
-</div>
+<div class="wrap" id="wrap"></div>
 
 <div class="footer">
+    <div class="counter">
+        Kursi Terisi : <b id="jumlah">0</b>
+    </div>
 
-<div class="counter">
-
-Kursi Terisi :
-
-<b id="jumlah">
-
-0
-
-</b>
-
+    <button id="reset">
+        RESET SEMUA
+    </button>
 </div>
 
-<button id="reset">
-
-RESET SEMUA
-
-</button>
-
-</div>
-
-  <script type="module">
+<script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getDatabase,
-ref,
-set,
-get,
-onValue,
-remove
+    getDatabase,
+    ref,
+    set,
+    get,
+    onValue,
+    remove
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-
-apiKey:"AIzaSyDUBQodoEwmyD3uVFJNJNIByPeWfgkfKXk",
-
-authDomain:"hitung-hadiri-tatatertib.firebaseapp.com",
-
-databaseURL:"https://hitung-hadiri-tatatertib-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-projectId:"hitung-hadiri-tatatertib",
-
-storageBucket:"hitung-hadiri-tatatertib.firebasestorage.app",
-
-messagingSenderId:"558298621036",
-
-appId:"1:558298621036:web:4f5c4cd051278c8e9de449"
-
+    apiKey:"AIzaSyDUBQodoEwmyD3uVFJNJNIByPeWfgkfKXk",
+    authDomain:"hitung-hadiri-tatatertib.firebaseapp.com",
+    databaseURL:"https://hitung-hadiri-tatatertib-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId:"hitung-hadiri-tatatertib",
+    storageBucket:"hitung-hadiri-tatatertib.firebasestorage.app",
+    messagingSenderId:"558298621036",
+    appId:"1:558298621036:web:4f5c4cd051278c8e9de449"
 };
 
-const app=initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-const db=getDatabase(app);
+const wrap = document.getElementById("wrap");
+const jumlah = document.getElementById("jumlah");
 
-const wrap=document.getElementById("wrap");
+let seatMap = {};
+let currentConfig = null;
 
-const jumlah=document.getElementById("jumlah");
-
-let seatMap={};
+/* ===========================
+   NAMA BLOK
+=========================== */
 
 function namaBlok(jumlahBlok){
+    const arr = [];
 
-const arr=[];
+    for(let i=0;i<jumlahBlok;i++){
+        arr.push(String.fromCharCode(65+i));
+    }
 
-for(let i=0;i<jumlahBlok;i++){
-
-arr.push(String.fromCharCode(65+i));
-
+    return arr;
 }
 
-return arr;
+/* ===========================
+   BUAT DENAH
+=========================== */
 
+function buatDenah(cfg){
+
+    wrap.innerHTML = "";
+    seatMap = {};
+
+    const blocks = namaBlok(cfg.blok);
+    const kolom = Math.max(1, Number(cfg.kolom) || 10);
+
+    blocks.forEach(block=>{
+
+        /*
+         * Kalau blokKursi belum ada, gunakan jumlah lama:
+         * baris x kolom.
+         */
+        let jumlahKursi = Number(
+            cfg.blokKursi && cfg.blokKursi[block] != null
+                ? cfg.blokKursi[block]
+                : ((Number(cfg.baris) || 2) * kolom)
+        );
+
+        jumlahKursi = Math.max(0, jumlahKursi);
+
+        const card = document.createElement("div");
+        card.className = "block";
+
+        const head = document.createElement("div");
+        head.className = "block-head";
+
+        const title = document.createElement("h2");
+        title.textContent = "BLOK " + block;
+
+        const edit = document.createElement("button");
+        edit.className = "edit-block";
+        edit.textContent = "EDIT";
+
+        edit.onclick = async ()=>{
+
+            const nilaiLama = jumlahKursi;
+
+            const input = prompt(
+                "Jumlah kursi untuk BLOK " + block + ":\n\n" +
+                "Masukkan angka kursi.",
+                nilaiLama
+            );
+
+            if(input === null) return;
+
+            const nilai = Number(input);
+
+            if(!Number.isInteger(nilai) || nilai < 0){
+                alert("Jumlah kursi harus berupa angka bulat 0 atau lebih.");
+                return;
+            }
+
+            /*
+             * Hanya config blok yang diedit.
+             * Data kursi blok lain tidak disentuh.
+             */
+            await set(
+                ref(db,"config/blokKursi/" + block),
+                nilai
+            );
+        };
+
+        head.appendChild(title);
+        head.appendChild(edit);
+
+        const info = document.createElement("div");
+        info.className = "block-info";
+        info.textContent = jumlahKursi + " kursi";
+
+        const seats = document.createElement("div");
+        seats.className = "seats";
+        seats.style.gridTemplateColumns = `repeat(${kolom},1fr)`;
+
+        for(let nomor=1; nomor<=jumlahKursi; nomor++){
+
+            const kode =
+                block + "-" + String(nomor).padStart(2,"0");
+
+            const btn = document.createElement("button");
+
+            btn.className = "seat";
+            btn.textContent = String(nomor).padStart(2,"0");
+
+            btn.onclick = ()=>{
+
+                const kursi = ref(db,"kursi/"+kode);
+
+                if(btn.classList.contains("booked")){
+                    remove(kursi);
+                }else{
+                    set(kursi,true);
+                }
+
+            };
+
+            seatMap[kode] = btn;
+            seats.appendChild(btn);
+        }
+
+        card.appendChild(head);
+        card.appendChild(info);
+        card.appendChild(seats);
+
+        wrap.appendChild(card);
+    });
 }
 
-function buatDenah(blok,baris,kolom){
+/* ===========================
+   SIMPAN JUMLAH BLOK
+=========================== */
 
-wrap.innerHTML="";
-
-seatMap={};
-
-const blocks=namaBlok(blok);
-
-blocks.forEach(block=>{
-
-const card=document.createElement("div");
-
-card.className="block";
-
-const title=document.createElement("h2");
-
-title.textContent="BLOK "+block;
-
-const seats=document.createElement("div");
-
-seats.className="seats";
-
-seats.style.gridTemplateColumns=
-`repeat(${kolom},1fr)`;
-
-let nomor=1;
-
-for(let r=1;r<=baris;r++){
-
-for(let c=1;c<=kolom;c++){
-
-const kode=
-block+"-"+String(nomor).padStart(2,"0");
-
-const btn=document.createElement("button");
-
-btn.className="seat";
-
-btn.textContent=
-String(nomor).padStart(2,"0");
-
-btn.onclick=()=>{
-
-const kursi=ref(db,"kursi/"+kode);
-
-if(btn.classList.contains("booked")){
-
-remove(kursi);
-
-}else{
-
-set(kursi,true);
-
-}
-
-};
-
-seatMap[kode]=btn;
-
-seats.appendChild(btn);
-
-nomor++;
-
-}
-
-}
-
-card.appendChild(title);
-
-card.appendChild(seats);
-
-wrap.appendChild(card);
-
-});
-
-}
-// =========================
-// SIMPAN KONFIGURASI DENAH
-// =========================
-
-document.getElementById("ubahDenah").onclick = async () => {
+document.getElementById("ubahDenah").onclick = async ()=>{
 
     const blok = Number(document.getElementById("blok").value);
-    const baris = Number(document.getElementById("baris").value);
     const kolom = Number(document.getElementById("kolom").value);
 
-    if(!confirm("Mengubah denah akan menghapus semua data kursi. Lanjutkan?")){
+    if(!Number.isInteger(blok) || blok < 1 || blok > 26){
+        alert("Jumlah blok harus antara 1 sampai 26.");
         return;
     }
 
-    await remove(ref(db,"kursi"));
+    if(!Number.isInteger(kolom) || kolom < 1 || kolom > 30){
+        alert("Kolom harus antara 1 sampai 30.");
+        return;
+    }
+
+    if(!confirm(
+        "Simpan perubahan jumlah blok?\n\n" +
+        "Data kursi yang sudah terisi TIDAK akan dihapus."
+    )){
+        return;
+    }
+
+    const oldCfg = currentConfig || {};
+
+    const blokKursi = {...(oldCfg.blokKursi || {})};
+
+    /*
+     * Jika konfigurasi lama belum punya jumlah kursi
+     * per blok, buat berdasarkan baris x kolom lama.
+     */
+    const defaultLama =
+        (Number(oldCfg.baris) || 2) *
+        (Number(oldCfg.kolom) || kolom);
+
+    for(const nama of namaBlok(blok)){
+        if(blokKursi[nama] == null){
+            blokKursi[nama] = defaultLama;
+        }
+    }
 
     await set(ref(db,"config"),{
         blok:blok,
-        baris:baris,
-        kolom:kolom
+        kolom:kolom,
+        blokKursi:blokKursi
     });
-
 };
 
-
-// =========================
-// BACA KONFIGURASI REALTIME
-// =========================
+/* ===========================
+   BACA KONFIGURASI REALTIME
+=========================== */
 
 onValue(ref(db,"config"),(snapshot)=>{
 
@@ -471,27 +484,51 @@ onValue(ref(db,"config"),(snapshot)=>{
 
     if(!cfg){
 
-        set(ref(db,"config"),{
+        const defaultConfig = {
             blok:2,
-            baris:2,
-            kolom:10
-        });
+            kolom:10,
+            blokKursi:{
+                A:20,
+                B:20
+            }
+        };
 
+        set(ref(db,"config"),defaultConfig);
         return;
     }
 
+    /*
+     * Migrasi otomatis dari konfigurasi lama:
+     * baris x kolom menjadi jumlah awal tiap blok.
+     */
+    if(!cfg.blokKursi){
+
+        const jumlahLama =
+            (Number(cfg.baris) || 2) *
+            (Number(cfg.kolom) || 10);
+
+        const blokKursi = {};
+
+        for(const nama of namaBlok(Number(cfg.blok) || 1)){
+            blokKursi[nama] = jumlahLama;
+        }
+
+        cfg.blokKursi = blokKursi;
+
+        set(ref(db,"config/blokKursi"),blokKursi);
+    }
+
+    currentConfig = cfg;
+
     document.getElementById("blok").value = cfg.blok;
-    document.getElementById("baris").value = cfg.baris;
     document.getElementById("kolom").value = cfg.kolom;
 
-    buatDenah(cfg.blok,cfg.baris,cfg.kolom);
-
+    buatDenah(cfg);
 });
 
-
-// =========================
-// UPDATE KURSI REALTIME
-// =========================
+/* ===========================
+   UPDATE KURSI REALTIME
+=========================== */
 
 onValue(ref(db,"kursi"),(snapshot)=>{
 
@@ -509,24 +546,23 @@ onValue(ref(db,"kursi"),(snapshot)=>{
             seatMap[kode].classList.add("booked");
             total++;
         }
-
     });
 
     jumlah.textContent = total;
-
 });
 
-
-// =========================
-// RESET
-// =========================
+/* ===========================
+   RESET
+=========================== */
 
 document.getElementById("reset").onclick = ()=>{
 
-    if(confirm("Reset semua kursi?")){
-
+    if(confirm(
+        "Reset semua kursi?\n\n" +
+        "Yang dihapus hanya status kursi terisi. " +
+        "Pengaturan jumlah kursi tiap blok tetap."
+    )){
         remove(ref(db,"kursi"));
-
     }
 
 };
@@ -535,4 +571,3 @@ document.getElementById("reset").onclick = ()=>{
 
 </body>
 </html>
-    
